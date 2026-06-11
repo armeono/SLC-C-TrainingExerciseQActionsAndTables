@@ -19,6 +19,8 @@ public static class QAction
         try
         {
 
+            protocol.ClearAllKeys(Parameter.Transportstreams.tablePid);
+
         }
         catch (Exception ex)
         {
