@@ -30,7 +30,7 @@ public static class QAction
             List<object[]> transportsStreamsToInsert = new List<object[]>();
             List<object[]> servicesToInsert = new List<object[]>();
 
-            string currentTimestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            var currentTimestamp = DateTime.Now;
 
 
             foreach (var ts in data.TransportStreams)
@@ -42,7 +42,7 @@ public static class QAction
                         ts.Multicast,
                         ts.SourceIp,
                         ts.NetworkId,
-                        currentTimestamp,
+                        currentTimestamp.ToOADate(),
                    });
 
                 foreach(var service in ts.Services)
@@ -54,7 +54,7 @@ public static class QAction
                         service.ServiceType,
                         service.ServiceProvider,
                         ts.TsId.ToString(),
-                        currentTimestamp,
+                        currentTimestamp.ToOADate(),
                     });
                 }
             }

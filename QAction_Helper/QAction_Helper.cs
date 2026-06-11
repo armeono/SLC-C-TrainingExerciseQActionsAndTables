@@ -8,6 +8,11 @@ namespace Skyline.DataMiner.Scripting
 {
 public static class Parameter
 {
+	/// <summary>PID: 1102 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int enableautopoll_1102 = 1102;
+	/// <summary>PID: 1102 | Type: read</summary>
+	public const int enableautopoll = 1102;
 	public class Write
 	{
 		/// <summary>PID: 1100 | Type: write</summary>
@@ -20,6 +25,11 @@ public static class Parameter
 		public const int deleteData_1101 = 1101;
 		/// <summary>PID: 1101 | Type: write</summary>
 		public const int deleteData = 1101;
+		/// <summary>PID: 1152 | Type: write</summary>
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public const int enableautopoll_1152 = 1152;
+		/// <summary>PID: 1152 | Type: write</summary>
+		public const int enableautopoll = 1152;
 	}
 	public class Transportstreams
 	{
@@ -184,6 +194,8 @@ public class WriteParameters
 	public System.Object Forcepolldata {get { return Protocol.GetParameter(1100); }set { Protocol.SetParameter(1100, value); }}
 	/// <summary>PID: 1101  | Type: write | DISCREETS: Delete Data = 1</summary>
 	public System.Object DeleteData {get { return Protocol.GetParameter(1101); }set { Protocol.SetParameter(1101, value); }}
+	/// <summary>PID: 1152  | Type: write | DISCREETS: Disabled = 0, Enabled = 1</summary>
+	public System.Object Enableautopoll {get { return Protocol.GetParameter(1152); }set { Protocol.SetParameter(1152, value); }}
 	public SLProtocolExt Protocol;
 	public WriteParameters(SLProtocolExt protocol)
 	{
@@ -227,6 +239,9 @@ public interface SLProtocolExt : SLProtocol
 	object Forcepolldata { get; set; }
 	object DeleteData_1101 { get; set; }
 	object DeleteData { get; set; }
+	object Enableautopoll_1102 { get; set; }
+	object Enableautopoll { get; set; }
+	object Enableautopoll_1152 { get; set; }
 	WriteParameters Write { get; set; }
 }
 public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
@@ -309,6 +324,14 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object DeleteData_1101 {get { return GetParameter(1101); }set { SetParameter(1101, value); }}
 	/// <summary>PID: 1101  | Type: write | DISCREETS: Delete Data = 1</summary>
 	public System.Object DeleteData {get { return Write.DeleteData; }set { Write.DeleteData = value; }}
+	/// <summary>PID: 1102  | Type: read | DISCREETS: Disabled = 0, Enabled = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Enableautopoll_1102 {get { return GetParameter(1102); }set { SetParameter(1102, value); }}
+	/// <summary>PID: 1102  | Type: read | DISCREETS: Disabled = 0, Enabled = 1</summary>
+	public System.Object Enableautopoll {get { return GetParameter(1102); }set { SetParameter(1102, value); }}
+	/// <summary>PID: 1152  | Type: write | DISCREETS: Disabled = 0, Enabled = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Enableautopoll_1152 {get { return GetParameter(1152); }set { SetParameter(1152, value); }}
 	public WriteParameters Write { get; set; }
 	public ConcreteSLProtocolExt()
 	{
@@ -368,6 +391,7 @@ public class TransportstreamsQActionRow : QActionTableRow
 	public TransportstreamsQActionRow(System.Object[] oRow) : base(0, 6, oRow) { }
 	public static implicit operator TransportstreamsQActionRow(System.Object[] source) { return new TransportstreamsQActionRow(source); }
 	public static implicit operator System.Object[](TransportstreamsQActionRow source) { return source.ToObjectArray(); }
+	public System.String[] GetChildKeysServicesServicestransportstreamsid(SLProtocol protocol) { return (System.String[])protocol.NotifyProtocol(196, 1055, Key); }
 }
 /// <summary>IDX: 0</summary>
 public class ServicesQActionRow : QActionTableRow
@@ -406,5 +430,6 @@ public class ServicesQActionRow : QActionTableRow
 	public ServicesQActionRow(System.Object[] oRow) : base(0, 6, oRow) { }
 	public static implicit operator ServicesQActionRow(System.Object[] source) { return new ServicesQActionRow(source); }
 	public static implicit operator System.Object[](ServicesQActionRow source) { return source.ToObjectArray(); }
+	public System.Object[] GetParentRowTransportstreamsServicestransportstreamsid(SLProtocol protocol) { return (System.Object[])protocol.GetRow(1000, (System.String)Servicestransportstreamsid); }
 }
 }
