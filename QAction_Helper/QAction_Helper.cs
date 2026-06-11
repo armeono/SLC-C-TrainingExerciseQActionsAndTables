@@ -22,9 +22,9 @@ public static class Parameter
 		public const int forcepolldata = 1100;
 		/// <summary>PID: 1101 | Type: write</summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public const int deleteData_1101 = 1101;
+		public const int deletedatafromtables_1101 = 1101;
 		/// <summary>PID: 1101 | Type: write</summary>
-		public const int deleteData = 1101;
+		public const int deletedatafromtables = 1101;
 		/// <summary>PID: 1152 | Type: write</summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public const int enableautopoll_1152 = 1152;
@@ -193,7 +193,7 @@ public class WriteParameters
 	/// <summary>PID: 1100  | Type: write | DISCREETS: Poll Data = 1</summary>
 	public System.Object Forcepolldata {get { return Protocol.GetParameter(1100); }set { Protocol.SetParameter(1100, value); }}
 	/// <summary>PID: 1101  | Type: write | DISCREETS: Delete Data = 1</summary>
-	public System.Object DeleteData {get { return Protocol.GetParameter(1101); }set { Protocol.SetParameter(1101, value); }}
+	public System.Object Deletedatafromtables {get { return Protocol.GetParameter(1101); }set { Protocol.SetParameter(1101, value); }}
 	/// <summary>PID: 1152  | Type: write | DISCREETS: Disabled = 0, Enabled = 1</summary>
 	public System.Object Enableautopoll {get { return Protocol.GetParameter(1152); }set { Protocol.SetParameter(1152, value); }}
 	public SLProtocolExt Protocol;
@@ -237,8 +237,8 @@ public interface SLProtocolExt : SLProtocol
 	object Serviceslastpolledat { get; set; }
 	object Forcepolldata_1100 { get; set; }
 	object Forcepolldata { get; set; }
-	object DeleteData_1101 { get; set; }
-	object DeleteData { get; set; }
+	object Deletedatafromtables_1101 { get; set; }
+	object Deletedatafromtables { get; set; }
 	object Enableautopoll_1102 { get; set; }
 	object Enableautopoll { get; set; }
 	object Enableautopoll_1152 { get; set; }
@@ -321,9 +321,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	/// <summary>PID: 1100  | Type: write | DISCREETS: Poll Data = 1</summary>
 	public System.Object Forcepolldata {get { return Write.Forcepolldata; }set { Write.Forcepolldata = value; }}
 	/// <summary>PID: 1101  | Type: write | DISCREETS: Delete Data = 1</summary>
-	public System.Object DeleteData_1101 {get { return GetParameter(1101); }set { SetParameter(1101, value); }}
+	public System.Object Deletedatafromtables_1101 {get { return GetParameter(1101); }set { SetParameter(1101, value); }}
 	/// <summary>PID: 1101  | Type: write | DISCREETS: Delete Data = 1</summary>
-	public System.Object DeleteData {get { return Write.DeleteData; }set { Write.DeleteData = value; }}
+	public System.Object Deletedatafromtables {get { return Write.Deletedatafromtables; }set { Write.Deletedatafromtables = value; }}
 	/// <summary>PID: 1102  | Type: read | DISCREETS: Disabled = 0, Enabled = 1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Enableautopoll_1102 {get { return GetParameter(1102); }set { SetParameter(1102, value); }}
