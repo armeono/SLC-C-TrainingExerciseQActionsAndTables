@@ -531,13 +531,15 @@ Any inquiries can be addressed to:
 
 	<Groups>
 		<Group id="1">
-			<Name>forcePollData</Name>
+			<Name>pollData</Name>
 			<Description>Poll Data</Description>
 			<Type>poll action</Type>
 			<Content>
 				<Action>4</Action>
 			</Content>
 		</Group>
+
+		
 
 		<Group id="2">
 			<Name>After Startup</Name>
@@ -575,7 +577,7 @@ Any inquiries can be addressed to:
 			<Time>change</Time>
 			<Type>action</Type>
 			<Content>
-				<Id>4</Id>
+				<Id>6</Id>
 			</Content>
 		</Trigger>
 
@@ -604,19 +606,21 @@ Any inquiries can be addressed to:
 			<On id="2">parameter</On>
 			<Type>run actions</Type>
 		</Action>
-		<Action id="3">
-			<Name>pollDataAction</Name>
-			<On id="1">group</On>
-			<Type>execute one top</Type>
-		</Action>
 		<Action id="4">
-			<Name>fetchDataFromJSON</Name>
+			<Name>pollData</Name>
 			<On id="1">parameter</On>
+			<Condition>id:1102 == 1</Condition>
 			<Type>run actions</Type>
 		</Action>
 		<Action id="5">
 			<Name>Delete Data</Name>
 			<On id="3">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+
+		<Action id="6">
+			<Name>forcePollData</Name>
+			<On id="1">parameter</On>
 			<Type>run actions</Type>
 		</Action>
 	</Actions>
@@ -626,7 +630,6 @@ Any inquiries can be addressed to:
 			<Name>Auto Poll</Name>
 			<Time initial="true">60000</Time>
 			<Interval>75</Interval>
-			<Condition>id:1102 == 1</Condition>
 			<Content>
 				<Group>1</Group>
 			</Content>
