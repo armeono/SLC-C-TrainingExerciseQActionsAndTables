@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using QAction_1.Helpers;
 using QAction_1.Models;
 using Skyline.DataMiner.Scripting;
@@ -43,9 +38,10 @@ public static class QAction
                         ts.SourceIp,
                         ts.NetworkId,
                         currentTimestamp.ToOADate(),
+                        1, // Assuming 1 is the default value for the last column in the TransportStreams table
                    });
 
-                foreach(var service in ts.Services)
+                foreach (var service in ts.Services)
                 {
                     servicesToInsert.Add(new object[]
                     {

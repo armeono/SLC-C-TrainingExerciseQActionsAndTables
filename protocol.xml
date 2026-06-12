@@ -101,6 +101,7 @@ Any inquiries can be addressed to:
 				<ColumnOption idx="3" pid="1004" type="retrieved" options="" />
 				<ColumnOption idx="4" pid="1005" type="retrieved" options="" />
 				<ColumnOption idx="5" pid="1006" type="retrieved" options="" />
+				<ColumnOption idx="6" pid="1007" type="retrieved" options="" />
 			</ArrayOptions>
 			<Information>
 				<Subtext>tableInformation</Subtext>
@@ -116,7 +117,7 @@ Any inquiries can be addressed to:
 				</Positions>
 			</Display>
 			<Measurement>
-				<Type options="tab=columns:1001|0-1002|1-1003|2-1004|3-1005|4-1006|5,width:100-100-100-100-100-156,sort:INT-INT-STRING-STRING-INT-STRING|DESC|0,lines:25,filter:true">table</Type>
+				<Type options="tab=columns:1001|0-1002|1-1003|2-1004|3-1005|4-1006|5-1007|6,width:100-100-100-100-100-156-100,sort:INT-INT-STRING-STRING-INT-STRING|DESC|0-STRING,lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
 		<Param id="1001" trending="false">
@@ -233,6 +234,60 @@ Any inquiries can be addressed to:
 			</Display>
 			<Measurement>
 				<Type options="datetime">number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1007" trending="false">
+			<Name>TransportStreamsStatus</Name>
+			<Description>Status (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="1037" setter="true">
+			<Name>TransportStreamsStatus</Name>
+			<Description>Status (Transport Streams)</Description>
+			<Type>write</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>togglebutton</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Disabled</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Enabled</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
 			</Measurement>
 		</Param>
 		
@@ -523,10 +578,11 @@ Any inquiries can be addressed to:
 		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
 		<QAction id="2" name="After Startup" encoding="csharp" triggers="2" />
 		
-		<QAction id="3" name="Poll Data" encoding="csharp" triggers="1" >
-		</QAction>
-		<QAction id="4" name="Delete Data From Table" encoding="csharp" triggers="3">
-		</QAction>
+		<QAction id="3" name="Poll Data" encoding="csharp" triggers="1" />
+
+		<QAction id="4" name="Delete Data From Table" encoding="csharp" triggers="3"/>
+
+		<QAction id="5" name="On Transport Stream Status Change" encoding="csharp" triggers="1037" row="true"/>
 	</QActions>
 
 	<Groups>
@@ -538,9 +594,6 @@ Any inquiries can be addressed to:
 				<Action>4</Action>
 			</Content>
 		</Group>
-
-		
-
 		<Group id="2">
 			<Name>After Startup</Name>
 			<Description>After Startup</Description>
@@ -560,7 +613,6 @@ Any inquiries can be addressed to:
 		</Group>
 	</Groups>
 	<Triggers>
-
 		<Trigger id="2">
 			<Name>After Startup</Name>
 			<On>protocol</On>
