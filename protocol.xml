@@ -104,7 +104,7 @@ Any inquiries can be addressed to:
 				<ColumnOption idx="6" pid="1007" type="retrieved" options="" />
 			</ArrayOptions>
 			<Information>
-				<Subtext>tableInformation</Subtext>
+				<Subtext>The Transport Streams table</Subtext>
 			</Information>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -241,6 +241,7 @@ Any inquiries can be addressed to:
 			<Description>Status (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
+				<Subtext>The status of the Transport Streams table </Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -305,7 +306,7 @@ Any inquiries can be addressed to:
 				<ColumnOption idx="5" pid="1056" type="retrieved" options="" />
 			</ArrayOptions>
 			<Information>
-				<Subtext>tableInformation</Subtext>
+				<Subtext>The Services table</Subtext>
 			</Information>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -513,6 +514,9 @@ Any inquiries can be addressed to:
 				<LengthType>next param</LengthType>
 				<DefaultValue>1</DefaultValue>
 			</Interprete>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
 				<Positions>
@@ -669,7 +673,6 @@ Any inquiries can be addressed to:
 			<On id="3">parameter</On>
 			<Type>run actions</Type>
 		</Action>
-
 		<Action id="6">
 			<Name>forcePollData</Name>
 			<On id="1">parameter</On>
@@ -679,14 +682,13 @@ Any inquiries can be addressed to:
 
 	<Timers>
 		<Timer id="1">
-			<Name>Auto Poll</Name>
+			<Name>Auto Poll (1 min)</Name>
 			<Time initial="true">60000</Time>
 			<Interval>75</Interval>
 			<Content>
 				<Group>1</Group>
 			</Content>
 		</Timer>
-		
 	</Timers>
 
 	<VersionHistory>

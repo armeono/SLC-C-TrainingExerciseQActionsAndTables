@@ -24,7 +24,7 @@ public static class QAction
 
             object[] transportStream = (object[])protocol.GetRow(Parameter.Transportstreams.tablePid, rowKey);
 
-            var transportStreamStatus = transportStream[Parameter.Transportstreams.Idx.transportstreamsstatus].ToString();
+            var transportStreamStatus = Convert.ToString(transportStream[Parameter.Transportstreams.Idx.transportstreamsstatus]);
 
 
             // If the status is enabled, add the services, else remove them

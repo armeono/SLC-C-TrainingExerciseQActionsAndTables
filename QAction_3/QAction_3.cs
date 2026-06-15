@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using QAction_1.Helpers;
 using QAction_1.Models;
 using Skyline.DataMiner.Scripting;
+using Skyline.DataMiner.Utils.Protocol.Extension;
 
 /// <summary>
 /// DataMiner QAction Class: Poll Data.
@@ -28,24 +29,22 @@ public static class QAction
             var currentTimestamp = DateTime.Now;
 
 
+            var existingStreams = GetExistingStreams(protocol);
+
             foreach (var ts in data.TransportStreams)
             {
-                object[] existingStream = (object[])protocol.GetRow(Parameter.Transportstreams.tablePid, ts.TsId.ToString());
+                bool exists = existingStreams.TryGetValue(Convert.ToString(ts.TsId), out string streamStatus);
 
-                var statusObj = existingStream[Parameter.Transportstreams.Idx.transportstreamsstatus];
-                var streamStatus = statusObj?.ToString() ?? "1";
-
-                if (existingStream.Length == 0)
+                if (!exists)
                 {
                     transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
 
                     foreach (var service in ts.Services)
                     {
-                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, ts.TsId.ToString()));
+                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, Convert.ToString(ts.TsId)));
                     }
 
                     continue;
-
                 }
 
                 transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
@@ -54,7 +53,7 @@ public static class QAction
                 {
                     foreach (var service in ts.Services)
                     {
-                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, ts.TsId.ToString()));
+                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, Convert.ToString(ts.TsId)));
                     }
                 }
 
@@ -79,7 +78,7 @@ public static class QAction
     {
         return new object[]
                        {
-                        data.TsId.ToString(),
+                        Convert.ToString(data.TsId),
                         data.TsName,
                         data.Multicast,
                         data.SourceIp,
@@ -93,12 +92,32 @@ public static class QAction
     {
         return new object[]
                         {
-                        data.ServiceId.ToString(),
+                        Convert.ToString(data.ServiceId),
                         data.ServiceName,
                         data.ServiceType,
                         data.ServiceProvider,
                         streamId,
                         currentTimestamp.ToOADate(),
                         };
+    }
+
+    private static Dictionary<string, string> GetExistingStreams(SLProtocol protocol)
+    {
+        var existingIds = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsid);
+        var existingStatuses = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsstatus);
+        Dictionary<string, string> existingStreams = new Dictionary<string, string>();
+        for (int i = 0; i < existingIds.Length; i++)
+        {
+            var idObj = existingIds[i];
+            var statusObj = existingStatuses[i];
+            if (idObj == null)
+            {
+                continue;
+            }
+            var id = Convert.ToString(idObj);
+            var status = Convert.ToString(statusObj) ?? "1";
+            existingStreams[id] = status;
+        }
+        return existingStreams;
     }
 }
