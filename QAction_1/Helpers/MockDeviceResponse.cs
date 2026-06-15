@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QAction_1.Helpers
+﻿namespace QAction_1.Helpers
 {
 
 
-     public class MockDeviceResponse
+    public class MockDeviceResponse
     {
-    
+
         public readonly string json = @"
 {
     ""transport_streams"": [{
