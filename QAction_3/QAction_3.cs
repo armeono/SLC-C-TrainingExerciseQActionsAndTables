@@ -30,29 +30,34 @@ public static class QAction
 
             foreach (var ts in data.TransportStreams)
             {
-                transportsStreamsToInsert.Add(new object[]
-                   {
-                        ts.TsId.ToString(),
-                        ts.TsName,
-                        ts.Multicast,
-                        ts.SourceIp,
-                        ts.NetworkId,
-                        currentTimestamp.ToOADate(),
-                        1, // Assuming 1 is the default value for the last column in the TransportStreams table
-                   });
+                object[] existingStream = (object[])protocol.GetRow(Parameter.Transportstreams.tablePid, ts.TsId.ToString());
 
-                foreach (var service in ts.Services)
+                var statusObj = existingStream[Parameter.Transportstreams.Idx.transportstreamsstatus];
+                var streamStatus = statusObj?.ToString() ?? "1";
+
+                if (existingStream.Length == 0)
                 {
-                    servicesToInsert.Add(new object[]
+                    transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
+
+                    foreach (var service in ts.Services)
                     {
-                        service.ServiceId.ToString(),
-                        service.ServiceName,
-                        service.ServiceType,
-                        service.ServiceProvider,
-                        ts.TsId.ToString(),
-                        currentTimestamp.ToOADate(),
-                    });
+                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, ts.TsId.ToString()));
+                    }
+
+                    continue;
+
                 }
+
+                transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
+
+                if (streamStatus == "1")
+                {
+                    foreach (var service in ts.Services)
+                    {
+                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, ts.TsId.ToString()));
+                    }
+                }
+
             }
 
             PopulateTables(protocol, transportsStreamsToInsert, servicesToInsert);
@@ -68,5 +73,32 @@ public static class QAction
     {
         protocol.FillArray(Parameter.Transportstreams.tablePid, transportStreamsToInsert, NotifyProtocol.SaveOption.Full);
         protocol.FillArray(Parameter.Services.tablePid, servicesToInsert, NotifyProtocol.SaveOption.Full);
+    }
+
+    private static object[] CreateTransportStreamsInsertObject(TransportStream data, DateTime currentTimestamp, string status)
+    {
+        return new object[]
+                       {
+                        data.TsId.ToString(),
+                        data.TsName,
+                        data.Multicast,
+                        data.SourceIp,
+                        data.NetworkId,
+                        currentTimestamp.ToOADate(),
+                        status, // Assuming 1 is the default value for the last column in the TransportStreams table
+                       };
+    }
+
+    private static object[] CreateServicesInsertObject(Service data, DateTime currentTimestamp, string streamId)
+    {
+        return new object[]
+                        {
+                        data.ServiceId.ToString(),
+                        data.ServiceName,
+                        data.ServiceType,
+                        data.ServiceProvider,
+                        streamId,
+                        currentTimestamp.ToOADate(),
+                        };
     }
 }
