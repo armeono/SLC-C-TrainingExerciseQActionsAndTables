@@ -80,12 +80,7 @@ Any inquiries can be addressed to:
 			<Description>After Startup Run QA</Description>
 			<Type>dummy</Type>
 		</Param>
-		<Param id="3">
-			<Name>deleteData</Name>
-			<Description>Delete Data From Table</Description>
-			<Type>dummy</Type>
-		</Param>
-		
+			
 		
 		
 		<!--Transport Streams table-->
@@ -514,30 +509,7 @@ Any inquiries can be addressed to:
 				</Discreets>
 			</Measurement>
 		</Param>
-		<Param id="1101">
-			<Name>DeleteDataFromTables</Name>
-			<Type>write</Type>
-			<Information>
-				<Subtext>Button to delete all data from tables</Subtext>
-			</Information>
-			<Interprete>
-				<RawType>numeric text</RawType>
-				<Type>double</Type>
-				<LengthType>next param</LengthType>
-			</Interprete>
-			<Measurement>
-				<Type width="110">button</Type>
-				<Discreets>
-					<Discreet>
-						<Display>Delete Data</Display>
-						<Value>1</Value>
-					</Discreet>
-				</Discreets>
-				
-			</Measurement>
-			<Message>This button deletes all the data from the tables</Message>
-		</Param>
-		
+			
 		<Param id="1102" trending="true">
 			<Name>EnableAutoPoll</Name>
 			<Description>Enable Auto Poll</Description>
@@ -622,8 +594,6 @@ Any inquiries can be addressed to:
 		
 		<QAction id="3" name="Poll Data" encoding="csharp" triggers="1" />
 
-		<QAction id="4" name="Delete Data From Table" encoding="csharp" triggers="3"/>
-
 		<QAction id="5" name="On Transport Stream Status Change" encoding="csharp" triggers="1037" row="true"/>
 	</QActions>
 
@@ -645,14 +615,6 @@ Any inquiries can be addressed to:
 			</Content>
 		</Group>
 
-		<Group id="3">
-			<Name>Delete Data</Name>
-			<Description>Delete Data</Description>
-			<Type>poll action</Type>
-			<Content>
-				<Action>5</Action>
-			</Content>
-		</Group>
 	</Groups>
 	<Triggers>
 		<Trigger id="2">
@@ -675,17 +637,7 @@ Any inquiries can be addressed to:
 			</Content>
 		</Trigger>
 
-		<Trigger id="1101">
-			<Name>On Click Delete Data Button</Name>
-			<On id="1101">parameter</On>
-			<Time>change</Time>
-			<Type>action</Type>
-			<Content>
-				<Id>5</Id>
-			</Content>
-
-		</Trigger>
-		
+			
 	</Triggers>
 
 	<Actions>
@@ -704,11 +656,6 @@ Any inquiries can be addressed to:
 			<Name>pollData</Name>
 			<On id="1">parameter</On>
 			<Condition>id:1102 == 1</Condition>
-			<Type>run actions</Type>
-		</Action>
-		<Action id="5">
-			<Name>Delete Data</Name>
-			<On id="3">parameter</On>
 			<Type>run actions</Type>
 		</Action>
 		<Action id="6">

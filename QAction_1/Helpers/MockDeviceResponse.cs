@@ -5,7 +5,7 @@
     public class MockDeviceResponse
     {
 
-        public readonly string json = @"
+        public readonly string Json = @"
 {
     ""transport_streams"": [{
             ""ts_id"": 1,

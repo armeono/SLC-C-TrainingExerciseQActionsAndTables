@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using QAction_1.Helpers;
 using QAction_1.Models;
 using Skyline.DataMiner.Scripting;
 using Skyline.DataMiner.Utils.Protocol.Extension;
+using Skyline.DataMiner.Utils.SecureCoding.SecureSerialization.Json.Newtonsoft;
 
 /// <summary>
 /// DataMiner QAction Class.
@@ -78,7 +78,7 @@ public static class QAction
     {
         var mockResponse = new MockDeviceResponse();
 
-        DeviceResponse data = JsonConvert.DeserializeObject<DeviceResponse>(mockResponse.json);
+        DeviceResponse data = SecureNewtonsoftDeserialization.DeserializeObject<DeviceResponse>(mockResponse.Json);
 
         var currentTimestamp = DateTime.Now;
 
