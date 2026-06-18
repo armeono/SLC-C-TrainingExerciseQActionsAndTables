@@ -174,7 +174,7 @@ Any inquiries can be addressed to:
 			</Interprete>
 			<Alarm>
 				<Monitored>true</Monitored>
-				<Normal></Normal>
+				<CL>1</CL>
 			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -197,6 +197,7 @@ Any inquiries can be addressed to:
 			</Interprete>
 			<Alarm>
 				<Monitored>true</Monitored>
+				<CL>1</CL>
 			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -219,6 +220,7 @@ Any inquiries can be addressed to:
 			</Interprete>
 			<Alarm>
 				<Monitored>true</Monitored>
+				<CL>1</CL>
 			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -262,6 +264,7 @@ Any inquiries can be addressed to:
 			</Interprete>
 			<Alarm>
 				<Monitored>true</Monitored>
+				<Normal>1</Normal>
 			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
@@ -550,6 +553,7 @@ Any inquiries can be addressed to:
 			</Interprete>
 			<Alarm>
 				<Monitored>true</Monitored>
+				<Normal>1</Normal>
 			</Alarm>
 			<Display>
 				<RTDisplay>true</RTDisplay>
