@@ -127,7 +127,7 @@ Any inquiries can be addressed to:
 			<Description>ID (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams ID</Subtext>
+				<Subtext>The ID of the Transprt Stream</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -146,7 +146,7 @@ Any inquiries can be addressed to:
 			<Description>Name (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams Name</Subtext>
+				<Subtext>The Name of the Transport Stream</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -165,7 +165,7 @@ Any inquiries can be addressed to:
 			<Description>Multicast (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams Multicast</Subtext>
+				<Subtext>The Multicast address of the Transport Stream</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -188,7 +188,7 @@ Any inquiries can be addressed to:
 			<Description>Source IP (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams Source IP</Subtext>
+				<Subtext>The Source IP of the Transport Stream</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -211,7 +211,7 @@ Any inquiries can be addressed to:
 			<Description>Network ID (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams Network ID</Subtext>
+				<Subtext>The Network ID of the Transport Stream</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -234,7 +234,7 @@ Any inquiries can be addressed to:
 			<Description>Last Polled At (Transport Streams)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Transport Streams Last Polled At</Subtext>
+				<Subtext>The last time the Transport Streams were polled</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
@@ -364,7 +364,7 @@ Any inquiries can be addressed to:
 			<Description>Service Id (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Service Id</Subtext>
+				<Subtext>The ID of the Service</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -383,7 +383,7 @@ Any inquiries can be addressed to:
 			<Description>Service Name (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Service Name</Subtext>
+				<Subtext>The Name of the Service</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -402,7 +402,7 @@ Any inquiries can be addressed to:
 			<Description>Service Type (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Service Type</Subtext>
+				<Subtext>The Type of the Service</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -421,7 +421,7 @@ Any inquiries can be addressed to:
 			<Description>Service Provider (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Service Provider</Subtext>
+				<Subtext>The Service Provider of the Service</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -440,7 +440,7 @@ Any inquiries can be addressed to:
 			<Description>Transport Streams ID (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Transport Streams ID</Subtext>
+				<Subtext>The ID of the Transport Stream associated with the Service</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>other</RawType>
@@ -459,7 +459,7 @@ Any inquiries can be addressed to:
 			<Description>Last Polled At (Services)</Description>
 			<Type>read</Type>
 			<Information>
-				<Subtext>Services Last Polled At</Subtext>
+				<Subtext>The last time the Service was polled</Subtext>
 			</Information>
 			<Interprete>
 				<RawType>numeric text</RawType>
