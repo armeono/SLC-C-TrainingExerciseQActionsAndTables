@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using QAction_1.Helpers;
 using QAction_1.Models;
 using Skyline.DataMiner.Scripting;
-using Skyline.DataMiner.Utils.Protocol.Extension;
 using Skyline.DataMiner.Utils.SecureCoding.SecureSerialization.Json.Newtonsoft;
 
 /// <summary>
@@ -31,33 +30,31 @@ public static class QAction
             var currentTimestamp = DateTime.Now;
 
 
-            var existingStreams = GetExistingStreams(protocol);
+            var existingStreams = protocol.GetColumnAsDictionary(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsid, Parameter.Transportstreams.Idx.transportstreamsstatus);
 
             foreach (var ts in data.TransportStreams)
             {
-                bool exists = existingStreams.TryGetValue(Convert.ToString(ts.TsId), out string streamStatus);
+                bool exists = existingStreams.TryGetValue(Convert.ToString(ts.TsId), out var streamStatusObj);
 
+                int streamStatus = Convert.ToInt32(streamStatusObj);
+
+                // If the stream does not exist, we add it with the default status and add its services as well.
                 if (!exists)
                 {
-                    transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
 
-                    foreach (var service in ts.Services)
-                    {
-                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, Convert.ToString(ts.TsId)));
-                    }
+                    transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, Status.Enabled));
+
+                    ProcessServices(servicesToInsert, ts.Services, currentTimestamp, Convert.ToString(ts.TsId));
 
                     continue;
                 }
 
+                // If the stream exists and is enabled, we update its timestamp and add its services as well. If it's disabled, we only update its timestamp.
+                transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, (Status)streamStatus));
 
-                transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
-
-                if (streamStatus == "1")
+                if (streamStatus == (int)Status.Enabled)
                 {
-                    foreach (var service in ts.Services)
-                    {
-                        servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, Convert.ToString(ts.TsId)));
-                    }
+                    ProcessServices(servicesToInsert, ts.Services, currentTimestamp, Convert.ToString(ts.TsId));
                 }
 
             }
@@ -77,51 +74,38 @@ public static class QAction
         protocol.FillArray(Parameter.Services.tablePid, servicesToInsert, NotifyProtocol.SaveOption.Partial);
     }
 
-    private static object[] CreateTransportStreamsInsertObject(TransportStream data, DateTime currentTimestamp, string status)
+    private static TransportstreamsQActionRow CreateTransportStreamsInsertObject(TransportStream data, DateTime currentTimestamp, Status status)
     {
-        return new object[]
-                       {
-                        Convert.ToString(data.TsId),
-                        data.TsName,
-                        data.Multicast,
-                        data.SourceIp,
-                        data.NetworkId,
-                        currentTimestamp.ToOADate(),
-                        status, // Assuming 1 is the default value for the last column in the TransportStreams table
-                       };
-    }
-
-    private static object[] CreateServicesInsertObject(Service data, DateTime currentTimestamp, string streamId)
-    {
-        return new object[]
-                        {
-                        Convert.ToString(data.ServiceId),
-                        data.ServiceName,
-                        data.ServiceType,
-                        data.ServiceProvider,
-                        streamId,
-                        currentTimestamp.ToOADate(),
-                        };
-    }
-
-    private static Dictionary<string, string> GetExistingStreams(SLProtocol protocol)
-    {
-        var existingIds = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsid);
-        var existingStatuses = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsstatus);
-
-        Dictionary<string, string> existingStreams = new Dictionary<string, string>();
-        for (int i = 0; i < existingIds.Length; i++)
+        return new TransportstreamsQActionRow
         {
-            var idObj = existingIds[i];
-            var statusObj = existingStatuses[i];
-            if (idObj == null)
-            {
-                continue;
-            }
-            var id = Convert.ToString(idObj);
-            var status = Convert.ToString(statusObj) ?? "1";
-            existingStreams[id] = status;
+            Transportstreamsid_1001 = Convert.ToString(data.TsId),
+            Transportstreamsname_1002 = data.TsName,
+            Transportstreamsmulticast_1003 = data.Multicast,
+            Transportstreamssourceip_1004 = data.SourceIp,
+            Transportstreamsnetworkid_1005 = data.NetworkId,
+            Transportstreamslastpolledat_1006 = currentTimestamp.ToOADate(),
+            Transportstreamsstatus_1007 = status,
+        };
+    }
+
+    private static ServicesQActionRow CreateServicesInsertObject(Service data, DateTime currentTimestamp, string streamId)
+    {
+        return new ServicesQActionRow
+        {
+            Servicesserviceid_1051 = Convert.ToString(data.ServiceId),
+            Servicesservicename_1052 = data.ServiceName,
+            Servicesservicetype_1053 = data.ServiceType,
+            Servicesserviceprovider_1054 = data.ServiceProvider,
+            Servicestransportstreamsid_1055 = streamId,
+            Serviceslastpolledat_1056 = currentTimestamp.ToOADate(),
+        };
+    }
+
+    private static void ProcessServices(List<object[]> servicesToInsert, List<Service> services, DateTime currentTimestamp, string streamId)
+    {
+        foreach (var service in services)
+        {
+            servicesToInsert.Add(CreateServicesInsertObject(service, currentTimestamp, streamId));
         }
-        return existingStreams;
     }
 }

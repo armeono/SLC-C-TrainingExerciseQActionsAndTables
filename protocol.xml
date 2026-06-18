@@ -96,7 +96,7 @@ Any inquiries can be addressed to:
 				<ColumnOption idx="3" pid="1004" type="retrieved" options="" />
 				<ColumnOption idx="4" pid="1005" type="retrieved" options="" />
 				<ColumnOption idx="5" pid="1006" type="retrieved" options="" />
-				<ColumnOption idx="6" pid="1007" type="retrieved" options="" />
+				<ColumnOption idx="6" pid="1007" type="retrieved" options=";save" />
 				<ColumnOption idx="7" pid="1008" type="displaykey" options="" />
 				
 			</ArrayOptions>

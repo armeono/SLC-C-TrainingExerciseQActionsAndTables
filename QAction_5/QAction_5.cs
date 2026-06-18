@@ -24,11 +24,11 @@ public static class QAction
 
             object[] transportStream = (object[])protocol.GetRow(Parameter.Transportstreams.tablePid, rowKey);
 
-            var transportStreamStatus = Convert.ToString(transportStream[Parameter.Transportstreams.Idx.transportstreamsstatus]);
+            int transportStreamStatus = Convert.ToInt32(transportStream[Parameter.Transportstreams.Idx.transportstreamsstatus]);
 
 
             // If the status is enabled, add the services, else remove them
-            if (transportStreamStatus == "1")
+            if (transportStreamStatus == (int)Status.Enabled)
             {
 
                 AddServices(protocol, rowKey);
@@ -48,25 +48,18 @@ public static class QAction
 
     private static void RemoveServices(SLProtocol protocol, string rowKey)
     {
-        var serviceIds = protocol.GetKeys(Parameter.Services.tablePid, NotifyProtocol.KeyType.Index);
 
         List<string> servicesToRemove = new List<string>();
 
-        foreach (var serviceId in serviceIds)
+        var services = protocol.GetColumnAsDictionary(Parameter.Services.tablePid, Parameter.Services.Idx.servicesserviceid, Parameter.Services.Idx.servicestransportstreamsid);
+
+        foreach (var service in services)
         {
+            var transportStreamId = service.Value;
 
-            object[] service = (object[])protocol.GetRow(Parameter.Services.tablePid, serviceId);
-
-            if (service == null)
+            if (Convert.ToString(transportStreamId) == rowKey)
             {
-                continue;
-            }
-
-            var serviceTransportStreamId = service[Parameter.Services.Idx.servicestransportstreamsid].ToString();
-
-            if (serviceTransportStreamId == rowKey)
-            {
-                servicesToRemove.Add(serviceId);
+                servicesToRemove.Add(service.Key);
             }
         }
 
@@ -84,15 +77,15 @@ public static class QAction
 
         var stream = data.TransportStreams.Find(ts => ts.TsId.ToString() == rowKey);
 
-        var services = stream.Services.Select(s => new object[]
+        var services = stream.Services.Select(s => new ServicesQActionRow
         {
-           s.ServiceId.ToString(),
-           s.ServiceName,
-           s.ServiceType,
-           s.ServiceProvider,
-           stream.TsId.ToString(),
-           currentTimestamp.ToOADate(),
-        }).ToList();
+            Servicesserviceid_1051 = s.ServiceId.ToString(),
+            Servicesservicename_1052 = s.ServiceName,
+            Servicesservicetype_1053 = s.ServiceType,
+            Servicesserviceprovider_1054 = s.ServiceProvider,
+            Servicestransportstreamsid_1055 = stream.TsId.ToString(),
+            Serviceslastpolledat_1056 = currentTimestamp.ToOADate(),
+        }.ToObjectArray()).ToList();
 
 
         protocol.FillArray(Parameter.Services.tablePid, services, NotifyProtocol.SaveOption.Partial);

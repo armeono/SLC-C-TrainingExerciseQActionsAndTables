@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 using Skyline.DataMiner.Scripting;
 
@@ -19,7 +16,8 @@ public static class QAction
         try
         {
 
-            protocol.ClearAllKeys(Parameter.Transportstreams.tablePid);
+            //protocol.ClearAllKeys(Parameter.Transportstreams.tablePid);
+            //protocol.ClearAllKeys(Parameter.Services.tablePid);
 
         }
         catch (Exception ex)
