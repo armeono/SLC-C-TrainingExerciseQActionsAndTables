@@ -23,6 +23,9 @@ public static class QAction
 
             DeviceResponse data = JsonConvert.DeserializeObject<DeviceResponse>(mockResponse.json);
 
+
+            TransportstreamsQActionRow streams = new TransportstreamsQActionRow();
+
             List<object[]> transportsStreamsToInsert = new List<object[]>();
             List<object[]> servicesToInsert = new List<object[]>();
 
@@ -47,6 +50,7 @@ public static class QAction
                     continue;
                 }
 
+
                 transportsStreamsToInsert.Add(CreateTransportStreamsInsertObject(ts, currentTimestamp, streamStatus));
 
                 if (streamStatus == "1")
@@ -70,8 +74,8 @@ public static class QAction
 
     private static void PopulateTables(SLProtocol protocol, List<object[]> transportStreamsToInsert, List<object[]> servicesToInsert)
     {
-        protocol.FillArray(Parameter.Transportstreams.tablePid, transportStreamsToInsert, NotifyProtocol.SaveOption.Full);
-        protocol.FillArray(Parameter.Services.tablePid, servicesToInsert, NotifyProtocol.SaveOption.Full);
+        protocol.FillArray(Parameter.Transportstreams.tablePid, transportStreamsToInsert, NotifyProtocol.SaveOption.Partial);
+        protocol.FillArray(Parameter.Services.tablePid, servicesToInsert, NotifyProtocol.SaveOption.Partial);
     }
 
     private static object[] CreateTransportStreamsInsertObject(TransportStream data, DateTime currentTimestamp, string status)
@@ -105,6 +109,7 @@ public static class QAction
     {
         var existingIds = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsid);
         var existingStatuses = protocol.GetColumn(Parameter.Transportstreams.tablePid, Parameter.Transportstreams.Idx.transportstreamsstatus);
+
         Dictionary<string, string> existingStreams = new Dictionary<string, string>();
         for (int i = 0; i < existingIds.Length; i++)
         {
