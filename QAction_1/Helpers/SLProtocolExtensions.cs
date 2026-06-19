@@ -19,14 +19,14 @@
             Dictionary<string, object> returnColumns = new Dictionary<string, object>();
             for (int i = 0; i < existingIds.Length; i++)
             {
-                var idObj = existingIds[i];
+                var IdObj = existingIds[i];
 
-                if (idObj == null)
+                if (IdObj == null)
                 {
                     continue;
                 }
 
-                returnColumns.Add(Convert.ToString(existingIds[i]), existingStatuses[i]);
+                returnColumns.Add(Convert.ToString(IdObj), existingStatuses[i]);
             }
             return returnColumns;
         }

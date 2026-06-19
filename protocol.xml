@@ -75,14 +75,6 @@ Any inquiries can be addressed to:
 			<Type>dummy</Type>
 		</Param>
 		
-		<Param id="2">
-			<Name>afterStartupRunQA</Name>
-			<Description>After Startup Run QA</Description>
-			<Type>dummy</Type>
-		</Param>
-			
-		
-		
 		<!--Transport Streams table-->
 		<Param id="1000">
 			<Name>TransportStreams</Name>
@@ -590,7 +582,6 @@ Any inquiries can be addressed to:
 
 	<QActions>
 		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
-		<QAction id="2" name="After Startup" encoding="csharp" triggers="2" />
 		
 		<QAction id="3" name="Poll Data" encoding="csharp" triggers="1" />
 
@@ -606,27 +597,10 @@ Any inquiries can be addressed to:
 				<Action>4</Action>
 			</Content>
 		</Group>
-		<Group id="2">
-			<Name>After Startup</Name>
-			<Description>After Startup</Description>
-			<Type>poll action</Type>
-			<Content>
-				<Action>2</Action>
-			</Content>
-		</Group>
-
+	
 	</Groups>
 	<Triggers>
-		<Trigger id="2">
-			<Name>After Startup</Name>
-			<On>protocol</On>
-			<Time>after startup</Time>
-			<Type>action</Type>
-			<Content>
-				<Id>1</Id>
-			</Content>
-		</Trigger>
-		
+			
 		<Trigger id="1100">
 			<Name>On Click Force Poll Data Button</Name>
 			<On id="1100">parameter</On>
@@ -642,17 +616,7 @@ Any inquiries can be addressed to:
 
 	<Actions>
 
-		<Action id="1">
-			<Name>After Startup Group</Name>
-			<On id="2">group</On>
-			<Type>execute next</Type>
-		</Action>
-		<Action id="2">
-			<Name>After Startup QAction</Name>
-			<On id="2">parameter</On>
-			<Type>run actions</Type>
-		</Action>
-		<Action id="4">
+			<Action id="4">
 			<Name>pollData</Name>
 			<On id="1">parameter</On>
 			<Condition>id:1102 == 1</Condition>

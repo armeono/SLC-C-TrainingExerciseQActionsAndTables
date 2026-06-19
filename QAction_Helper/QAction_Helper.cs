@@ -229,7 +229,6 @@ public interface SLProtocolExt : SLProtocol
 	/// <summary>PID: 1050</summary>
 	ServicesQActionTable services { get; set; }
 	object Polljsonrunqa_dummy { get; set; }
-	object Afterstartuprunqa_dummy { get; set; }
 	object Transportstreamsid_1001 { get; set; }
 	object Transportstreamsid { get; set; }
 	object Transportstreamsname_1002 { get; set; }
@@ -274,8 +273,6 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public ServicesQActionTable services { get; set; }
 	/// <summary>PID: 1  | Type: dummy</summary>
 	public System.Object Polljsonrunqa_dummy {get { return GetParameter(1); }set { SetParameter(1, value); }}
-	/// <summary>PID: 2  | Type: dummy</summary>
-	public System.Object Afterstartuprunqa_dummy {get { return GetParameter(2); }set { SetParameter(2, value); }}
 	/// <summary>PID: 1001  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Transportstreamsid_1001 {get { return GetParameter(1001); }set { SetParameter(1001, value); }}
